@@ -7,6 +7,8 @@ public abstract class Employee {
      private double baseSalary;
      private String department;
      static int id = 100;
+    private BankAccount account;
+
      public Employee(){
      }
     public Employee(String fullName, double baseSalary, String department) {
@@ -14,6 +16,7 @@ public abstract class Employee {
         this.baseSalary = baseSalary;
         this.department = department;
         parseName();
+        this.account = new BankAccount(baseSalary);
     }
     public void  parseName(){
          try {
@@ -74,5 +77,8 @@ public abstract class Employee {
 
     public String getDepartment() {
         return department;
+    }
+    public BankAccount getAccount() {
+        return account;
     }
 }

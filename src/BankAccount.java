@@ -1,23 +1,29 @@
-public class BankAccount {
-    private  int balance;
+class BankAccount {
+    private double balance;
 
-    public BankAccount(int balance) {
+    public BankAccount(double balance) {
         this.balance = balance;
     }
-    public synchronized void deposit(int amount){
+
+    public synchronized void deposit(double amount) {
         balance += amount;
-        System.out.println("Deposited " + amount + " | Balance: " + balance);
+        System.out.println("Deposited: " + amount +
+                " | Balance: " + balance +
+                " | Thread: " + Thread.currentThread().getName());
     }
-    public synchronized void withdraw(int amount){
-        if(balance>=amount){
-            balance -=amount;
-            System.out.println("Withdrawn " + amount + " | Balance: " + balance);
-        }else{
-            System.out.println("Insufficient balance! | Balance: " + balance);
+
+    public synchronized void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount +
+                    " | Balance: " + balance +
+                    " | Thread: " + Thread.currentThread().getName());
+        } else {
+            System.out.println("Insufficient Balance | Balance: " + balance);
         }
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 }

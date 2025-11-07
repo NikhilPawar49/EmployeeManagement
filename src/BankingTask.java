@@ -1,10 +1,10 @@
-class BankingTask implements Runnable {
-    private BankAccount account;
+class EmployeeBankTask implements Runnable {
+    private Employee employee;
     private boolean deposit;
-    private int amount;
+    private double amount;
 
-    public BankingTask(BankAccount account, boolean deposit, int amount) {
-        this.account = account;
+    public EmployeeBankTask(Employee employee, boolean deposit, double amount) {
+        this.employee = employee;
         this.deposit = deposit;
         this.amount = amount;
     }
@@ -12,9 +12,9 @@ class BankingTask implements Runnable {
     @Override
     public void run() {
         if (deposit) {
-            account.deposit(amount);
+            employee.getAccount().deposit(amount);
         } else {
-            account.withdraw(amount);
+            employee.getAccount().withdraw(amount);
         }
     }
 }

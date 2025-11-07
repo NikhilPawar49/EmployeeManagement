@@ -65,21 +65,26 @@ public class Main {
 
         payroll.generateSummaryReport();
 
-        System.out.println("\n--- SYNCHRONIZATION USING EXECUTOR ---");
+        System.out.println("\n--- MULTITHREADING EMPLOYEE BANK TASK ---");
 
-        BankAccount account = new BankAccount(1000);
-        ExecutorService bankExecutor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        bankExecutor.submit(new BankingTask(account, true, 500));   // deposit
-        bankExecutor.submit(new BankingTask(account, false, 800));  // withdraw
+        executor.submit(new EmployeeBankTask(m1, true, 500));
+        executor.submit(new EmployeeBankTask(m1, false, 200));
 
-        bankExecutor.shutdown();
+        executor.submit(new EmployeeBankTask(d1, true, 1000));
+        executor.submit(new EmployeeBankTask(d1, false, 1500));
 
-        while (!bankExecutor.isTerminated()) {
-            // wait
-        }
+        executor.submit(new EmployeeBankTask(ds1, true, 400));
+        executor.submit(new EmployeeBankTask(ds1, false, 100));
 
-        System.out.println("Final Balance: " + account.getBalance());
+        executor.shutdown();
+        while (!executor.isTerminated()) {}
+
+        System.out.println("Final Balances:");
+        System.out.println(m1.getFullName() + " → " + m1.getAccount().getBalance());
+        System.out.println(d1.getFullName() + " → " + d1.getAccount().getBalance());
+        System.out.println(ds1.getFullName() + " → " + ds1.getAccount().getBalance());
 
     }
 }
