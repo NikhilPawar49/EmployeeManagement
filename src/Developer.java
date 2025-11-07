@@ -1,0 +1,37 @@
+public class Developer extends Employee{
+    private String programmingLanguage;
+    private int projectsCompleted = 0;
+    private String skillLevel;
+
+    public Developer(String fullName, double baseSalary, String department,String programmingLanguage, String skillLevel) {
+        super(fullName, baseSalary, department);
+        this.skillLevel = skillLevel;
+        this.programmingLanguage = programmingLanguage;
+    }
+    public double calculateSalary(){
+        double skillAllowance = 0;
+        if(skillLevel.equalsIgnoreCase("senior") ){
+            skillAllowance = 0.25;
+        } else if (skillLevel.equalsIgnoreCase("mid") ) {
+            skillAllowance = 0.15;
+        }else{
+            skillAllowance = 0.10;
+        }
+        return getBaseSalary() + getBaseSalary() * skillAllowance + getBonus() ;
+    }
+    public String getRole(){
+        return "Developer";
+    }
+    public int getBonus(){
+        return projectsCompleted * 300;
+    }
+    public void completeProject(){
+        projectsCompleted++;
+    }
+    public void completeProject(int a){
+        if(a > 0) projectsCompleted += a;
+    }
+    public String generateEmail(){
+        return getFirstName().charAt(0)+"."+getLastName()+"@techcorp.com";
+    }
+}
