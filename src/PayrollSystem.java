@@ -13,12 +13,15 @@ public class PayrollSystem {
     public boolean removeEmployees(String id){
         return employees.removeIf(e->e.getEmployeeId().equalsIgnoreCase(id));
     }
-    public List<Employee> searchByName(String name){
+    public List<Employee> searchByName(String name)throws EmployeeNotFoundException{
         List<Employee> result = new ArrayList<>();
         for(Employee e: employees){
             if(e.getFullName().toLowerCase().contains(name.toLowerCase())){
                 result.add(e);
             }
+        }
+        if (result.isEmpty()) {
+            throw new EmployeeNotFoundException("No employee found with name: " + name);
         }
         return result;
     }

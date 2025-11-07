@@ -1,3 +1,6 @@
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -51,12 +54,32 @@ public class Main {
 
         payroll.displayAllEmployees();
 
-        payroll.searchByName("Nikhil")
-                .forEach(e -> System.out.println(e.getFullName()));
-
+        try {
+            payroll.searchByName("Nikhil")
+                    .forEach(e -> System.out.println(e.getFullName()));
+        }catch (EmployeeNotFoundException e){
+            System.out.println(e.getMessage());
+        }
         payroll.searchByRole("designer")
                 .forEach(e -> System.out.println(e.getFullName()));
 
         payroll.generateSummaryReport();
+
+        System.out.println("\n--- SYNCHRONIZATION USING EXECUTOR ---");
+
+        BankAccount account = new BankAccount(1000);
+        ExecutorService bankExecutor = Executors.newFixedThreadPool(2);
+
+        bankExecutor.submit(new BankingTask(account, true, 500));   // deposit
+        bankExecutor.submit(new BankingTask(account, false, 800));  // withdraw
+
+        bankExecutor.shutdown();
+
+        while (!bankExecutor.isTerminated()) {
+            // wait
+        }
+
+        System.out.println("Final Balance: " + account.getBalance());
+
     }
 }

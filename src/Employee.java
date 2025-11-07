@@ -16,10 +16,15 @@ public abstract class Employee {
         parseName();
     }
     public void  parseName(){
-         String parts[] = fullName.split("\\s+");
-         firstName = parts[0];
-         middleName = parts[1];
-         lastName = parts[2];
+         try {
+             String parts[] = fullName.trim().split("\\s+");
+             firstName = parts[0];
+             middleName = parts[1];
+             lastName = parts[2];
+         }catch (Exception e){
+             System.out.println("Invalid name format! Expected first middle and last name");
+             firstName = middleName = lastName ="";
+         }
     }
     public String initialName(){
         StringBuilder sb = new StringBuilder();

@@ -24,6 +24,11 @@ public class Manager extends Employee{
     }
 
     public void setProjectBonus(String projectBonus) {
-        this.projectBonus = Double.parseDouble(projectBonus);
+        try {
+            this.projectBonus = Double.parseDouble(projectBonus);
+        }catch (Exception e){
+            System.out.println("Invalid project bonus Value");
+            this.projectBonus = 0;
+        }
     }
 }
